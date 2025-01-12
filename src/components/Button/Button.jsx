@@ -17,10 +17,10 @@ const buttonVariants = cva(
     }
 );
 
-const Button = ({children, variant}) => {
+const Button = ({children, variant, onClick, ticketId, type}) => {
 
     return (
-        <button className={twMerge(buttonVariants({variant}))}>
+        <button className={twMerge(buttonVariants({variant}))} onClick={() => onClick(ticketId, type)}>
             {children}
         </button>
     );

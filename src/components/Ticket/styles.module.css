@@ -1,3 +1,16 @@
-.buttonContainer {
-    @apply flex justify-center items-center gap-2;
+.ticket {
+    @apply p-4 flex justify-between items-stretch gap-4 border-2 border-gray-200 rounded-md;
+
+    .content {
+        @apply w-full h-full flex flex-col justify-between items-center;
+
+        p {
+            @apply w-full p-0 m-0;
+        }
+    }
+
+    .buttonContainer {
+        @apply w-fit flex justify-center items-center gap-2;
+    }
+
 }

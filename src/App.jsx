@@ -59,10 +59,12 @@ const App = () => {
         <div className="w-full max-w-4xl mx-auto p-4">
             <Header score={score} time={time}/>
 
+
             <div className="grid grid-cols-1 gap-4">
+                {/*<Ticket ticket={{id: 2, text: "text", urgent: false}} />*/}
                 {
                     tickets.map(ticket =>
-                        <Ticket ticket={ticket}/>
+                        <Ticket ticket={ticket} handleClick={handleTicketClassification} />
                     )
                 }
             </div>

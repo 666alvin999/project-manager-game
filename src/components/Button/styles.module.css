@@ -1,19 +1,38 @@
 .button {
     @apply text-white px-4 py-2 rounded-md;
+
+    transition-property: background-color;
+    transition-duration: 200ms;
 }
 
 .bug {
     @apply bg-bug;
+
+    &:active {
+        @apply bg-darkBug;
+    }
 }
 
 .feature {
     @apply bg-feature;
+
+    &:active {
+        @apply bg-darkFeature;
+    }
 }
 
 .support {
     @apply bg-support;
+
+    &:active {
+        @apply bg-darkSupport;
+    }
 }
 
 .technical {
     @apply bg-technical;
+
+    &:active {
+        @apply bg-darkTechnical;
+    }
 }
