@@ -1,14 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {generateTicket} from "./data.js";
+import React, { useEffect, useState } from "react";
+import { generateTicket } from "./data.js";
 import Header from "./components/Header/Header.jsx";
 import GameOver from "./components/GameOver/GameOver.jsx";
 import Ticket from "./components/Ticket/Ticket.jsx";
+import Success from "./components/Animations/Success.jsx";
+import Error from "./components/Animations/Error.jsx";
 
 const App = () => {
     const [score, setScore] = useState(100);
     const [time, setTime] = useState(300);
     const [tickets, setTickets] = useState([]);
     const [gameOver, setGameOver] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -40,6 +44,14 @@ const App = () => {
             });
 
             setTickets(prev => prev.filter(t => t.id !== ticketId));
+
+            if (correct) {
+                setShowSuccess(true);
+                setTimeout(() => setShowSuccess(false), 1000);
+            } else {
+                setShowError(true);
+                setTimeout(() => setShowError(false), 1500);
+            }
         }
     };
 
@@ -57,21 +69,27 @@ const App = () => {
 
     return (
         <div className="w-full max-w-4xl mx-auto p-4">
-            <Header score={score} time={time}/>
+            <Header score={score} time={time} />
 
-
-            <div className="grid grid-cols-1 gap-4">
-                {/*<Ticket ticket={{id: 2, text: "text", urgent: false}} />*/}
-                {
-                    tickets.map(ticket =>
-                        <Ticket ticket={ticket} handleClick={handleTicketClassification} />
-                    )
-                }
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                {showSuccess && <Success />}
             </div>
 
-            {gameOver && (
-                <GameOver score={score}/>
-            )}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                {showError && <Error />}
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+                {tickets.map(ticket => (
+                    <Ticket
+                        key={ticket.id}
+                        ticket={ticket}
+                        handleClick={handleTicketClassification}
+                    />
+                ))}
+            </div>
+
+            {gameOver && <GameOver score={score} />}
         </div>
     );
 };
