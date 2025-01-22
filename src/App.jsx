@@ -4,12 +4,14 @@ import Header from "./components/Header/Header.jsx";
 import GameOver from "./components/GameOver/GameOver.jsx";
 import Ticket from "./components/Ticket/Ticket.jsx";
 import ConfettiComponent from './components/ConfettiComponent/ConfettiComponent.jsx';
+import confetti from "canvas-confetti";
+
 const App = () => {
     const [score, setScore] = useState(100);
     const [time, setTime] = useState(300);
     const [tickets, setTickets] = useState([]);
     const [gameOver, setGameOver] = useState(false);
-    const [showConfetti, setShowConfetti] = useState(false); // State for confetti trigger
+    const [showConfetti, setShowConfetti] = useState(false); // Confetti trigger state
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -34,9 +36,12 @@ const App = () => {
             const correct = ticket.type === classifiedType;
 
             if (correct) {
-                // Show confetti only on correct answer
+                // Animation de confettis pour les bonnes réponses
                 setShowConfetti(true);
-                setTimeout(() => setShowConfetti(false), 500); // Hide confetti after 3 seconds
+                setTimeout(() => setShowConfetti(false), 500); // Cache les confettis après 0.5 secondes
+            } else {
+                // Animation spécifique pour les mauvaises réponses
+                triggerBadAnswerAnimation();
             }
 
             setScore(prev => {
@@ -50,6 +55,46 @@ const App = () => {
         }
     };
 
+    const triggerBadAnswerAnimation = () => {
+        const scalar = 2;
+        const skull = confetti.shapeFromText({ text: '☠️', scalar });
+    
+        const defaults = {
+            spread: 360,
+            ticks: 120, // Augmente la durée de l'animation
+            gravity: 0,
+            decay: 0.94, // Décroissance plus lente
+            startVelocity: 10, // Vitesse de départ réduite pour ralentir les particules
+            shapes: [skull],
+            scalar,
+        };
+    
+        function shoot() {
+            confetti({
+                ...defaults,
+                particleCount: 30,
+            });
+    
+            confetti({
+                ...defaults,
+                particleCount: 5,
+                flat: true,
+            });
+    
+            // confetti({
+            //     ...defaults,
+            //     particleCount: 15,
+            //     scalar: scalar / 2,
+            //     shapes: ['circle'],
+            // });
+        }
+    
+        // Déclenchement de l'animation
+        setTimeout(shoot, 0);
+        setTimeout(shoot, 250); // Intervalle plus large pour un effet espacé
+        setTimeout(shoot, 500);
+    };
+    
     const addNewTicket = () => {
         const generatedTicket = generateTicket();
         const newTicket = {
