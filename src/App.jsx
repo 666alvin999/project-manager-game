@@ -37,7 +37,7 @@ const App = () => {
             if (correct) {
                 // Show confetti only on correct answer
                 setShowConfetti(true);
-                setTimeout(() => setShowConfetti(false), 3000); // Hide confetti after 3 seconds
+                setTimeout(() => setShowConfetti(false), 500); // Hide confetti after 3 seconds
             }
 
             setScore(prev => {
@@ -65,7 +65,7 @@ const App = () => {
 
     return (
         <>
-            <ContinuousConfetti />
+            {/* <ContinuousConfetti /> */} 
             <ConfettiComponent
                 trigger={showConfetti} // Confetti triggers on correct answer
                 config={{

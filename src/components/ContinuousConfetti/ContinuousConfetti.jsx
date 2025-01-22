@@ -11,7 +11,7 @@ const ContinuousConfetti = () => {
         useWorker: true, // Améliore les performances
       });
 
-      const duration = 5 * 1000; // Durée de l'animation (15 secondes)
+      const duration = 4 * 1000; // Durée de l'animation (15 secondes)
       const animationEnd = Date.now() + duration;
       let skew = 1;
 
