@@ -10,7 +10,7 @@ const Header = ({ time, score }) => {
   return (
     <div className="flex flex-col items-center justify-center mb-8 text-center">
       {/* Score */}
-      <div className="text-4xl font-extrabold text-gray-800 tracking-wide mb-6">
+      <div className="text-4xl bg-white p-8 font-extrabold text-gray-800 tracking-wide mb-6">
         <span className="block text-gray-500 text-lg">Ton score</span>
         <motion.span
           key={score}
@@ -24,10 +24,10 @@ const Header = ({ time, score }) => {
       </div>
 
       {/* Temps restant */}
-      <div className="relative flex items-center justify-center bg-black px-6 py-4 rounded-sm shadow-lg border border-gray-600">
+      <div className="relative flex items-center justify-center -6 py-4 rounded-sm shadow-lg ">
         {/* Background animation */}
         <motion.div
-          className="absolute inset-0 rounded-sm opacity-20 bg-gradient-to-r from-white to-blue-500"
+          className="absolute inset-0 rounded-sm opacity-20 "
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%"],
           }}
