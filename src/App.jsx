@@ -4,7 +4,6 @@ import Header from "./components/Header/Header.jsx";
 import GameOver from "./components/GameOver/GameOver.jsx";
 import Ticket from "./components/Ticket/Ticket.jsx";
 import ConfettiComponent from './components/ConfettiComponent/ConfettiComponent.jsx';
-import ContinuousConfetti from "./components/ContinuousConfetti/ContinuousConfetti.jsx";
 const App = () => {
     const [score, setScore] = useState(100);
     const [time, setTime] = useState(300);
@@ -65,7 +64,6 @@ const App = () => {
 
     return (
         <>
-            {/* <ContinuousConfetti /> */} 
             <ConfettiComponent
                 trigger={showConfetti} // Confetti triggers on correct answer
                 config={{
