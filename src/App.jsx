@@ -4,13 +4,13 @@ import Header from "./components/Header/Header.jsx";
 import GameOver from "./components/GameOver/GameOver.jsx";
 import Ticket from "./components/Ticket/Ticket.jsx";
 import ConfettiComponent from './components/ConfettiComponent/ConfettiComponent.jsx';
-
+import ContinuousConfetti from "./components/ContinuousConfetti/ContinuousConfetti.jsx";
 const App = () => {
     const [score, setScore] = useState(100);
     const [time, setTime] = useState(300);
     const [tickets, setTickets] = useState([]);
     const [gameOver, setGameOver] = useState(false);
-    const [showConfetti, setShowConfetti] = useState(false); // New state for confetti
+    const [showConfetti, setShowConfetti] = useState(false); // State for confetti trigger
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -35,7 +35,7 @@ const App = () => {
             const correct = ticket.type === classifiedType;
 
             if (correct) {
-                // Show confetti on correct answer
+                // Show confetti only on correct answer
                 setShowConfetti(true);
                 setTimeout(() => setShowConfetti(false), 3000); // Hide confetti after 3 seconds
             }
@@ -65,8 +65,9 @@ const App = () => {
 
     return (
         <>
+            <ContinuousConfetti />
             <ConfettiComponent
-                trigger={showConfetti} // Trigger confetti when the state changes
+                trigger={showConfetti} // Confetti triggers on correct answer
                 config={{
                     particleCount: 200,
                     spread: 100,
@@ -80,7 +81,7 @@ const App = () => {
 
                 <div className="grid grid-cols-1 gap-4">
                     {tickets.map(ticket =>
-                        <Ticket ticket={ticket} handleClick={handleTicketClassification} />
+                        <Ticket key={ticket.id} ticket={ticket} handleClick={handleTicketClassification} />
                     )}
                 </div>
 
