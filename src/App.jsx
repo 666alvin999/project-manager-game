@@ -12,23 +12,26 @@ const App = () => {
   const [time, setTime] = useState(300);
   const [tickets, setTickets] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false); // Confetti trigger state
-  const [scoreChange, setScoreChange] = useState(null); // Changement temporaire du score
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [scoreChange, setScoreChange] = useState(null);
+  const [isStartScreenVisible, setIsStartScreenVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (time > 0 && !gameOver) {
-        setTime((prev) => prev - 1);
-        if (Math.random() < 0.2) {
-          addNewTicket();
+    if (!isStartScreenVisible) {
+      const timer = setInterval(() => {
+        if (time > 0 && !gameOver) {
+          setTime((prev) => prev - 1);
+          if (Math.random() < 0.2) {
+            addNewTicket();
+          }
+        } else {
+          setGameOver(true);
         }
-      } else {
-        setGameOver(true);
-      }
-    }, 1000);
+      }, 1000);
 
-    return () => clearInterval(timer);
-  }, [time, gameOver]);
+      return () => clearInterval(timer);
+    }
+  }, [time, gameOver, isStartScreenVisible]);
 
   const handleTicketClassification = (ticketId, classifiedType) => {
     const ticket = tickets.find((t) => t.id === ticketId);
@@ -37,11 +40,9 @@ const App = () => {
       const correct = ticket.type === classifiedType;
 
       if (correct) {
-        // Animation de confettis pour les bonnes réponses
         setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 500); // Cache les confettis après 0.5 secondes
+        setTimeout(() => setShowConfetti(false), 500);
       } else {
-        // Animation spécifique pour les mauvaises réponses
         triggerBadAnswerAnimation();
       }
 
@@ -51,7 +52,7 @@ const App = () => {
 
       setScore((prev) => prev + actualChange);
       setScoreChange(actualChange);
-      setTimeout(() => setScoreChange(null), 1000); // Effacer après 1 seconde
+      setTimeout(() => setScoreChange(null), 1000);
 
       setTickets((prev) => prev.filter((t) => t.id !== ticketId));
     }
@@ -75,10 +76,10 @@ const App = () => {
 
     const defaults = {
       spread: 360,
-      ticks: 120, // Augmente la durée de l'animation
+      ticks: 120,
       gravity: 0,
-      decay: 0.94, // Décroissance plus lente
-      startVelocity: 10, // Vitesse de départ réduite pour ralentir les particules
+      decay: 0.94,
+      startVelocity: 10,
       shapes: [skull],
       scalar,
     };
@@ -96,57 +97,88 @@ const App = () => {
       });
     }
 
-    // Déclenchement de l'animation
     setTimeout(shoot, 0);
-    setTimeout(shoot, 250); // Intervalle plus large pour un effet espacé
+    setTimeout(shoot, 250);
     setTimeout(shoot, 500);
+  };
+
+  const startGame = () => {
+    setIsStartScreenVisible(false);
   };
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 relative">
-      <Header score={score} time={time} />
-
-      {/* Animation du changement de score */}
+      {/* Modal de transition avec animation */}
       <AnimatePresence>
-        {scoreChange !== null && (
+        {isStartScreenVisible && (
           <motion.div
-            key="scoreChange"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 25 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
-            className={`absolute top-10 left-1/2 transform -translate-x-1/2 text-xl font-bold ${
-              scoreChange > 0 ? "text-green-500" : "text-red-500"
-            }`}
+            className="fixed inset-0 flex items-center justify-center bg-gray-700 text-white"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            {scoreChange > 0 ? `+${scoreChange}` : `${scoreChange}`}
+            <div className="text-center">
+              <h1 className="text-5xl font-bold mb-8">Tu veux devenir chef de projet ?</h1>
+              <motion.button
+                onClick={startGame}
+                className="px-8 py-4 bg-white text-gray-600 font-bold rounded-lg shadow-md hover:bg-gray-200"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                Commencer
+              </motion.button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Confetti trigger on correct answer */}
-      <ConfettiComponent
-        trigger={showConfetti}
-        config={{
-          particleCount: 200,
-          spread: 100,
-          colors: ["#ff0000", "#00ff00", "#0000ff"],
-          shapes: ["circle", "square"],
-          origin: { x: 0.5, y: 0.5 },
-        }}
-      />
+      {/* Contenu principal */}
+      {!isStartScreenVisible && (
+        <>
+          <Header score={score} time={time} />
 
-      <div className="grid grid-cols-1 gap-4">
-        {tickets.map((ticket) => (
-          <Ticket
-            key={ticket.id}
-            ticket={ticket}
-            handleClick={handleTicketClassification}
+          <AnimatePresence>
+            {scoreChange !== null && (
+              <motion.div
+                key="scoreChange"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 25 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.5 }}
+                className={`absolute top-10 left-1/2 transform -translate-x-1/2 text-xl font-bold ${
+                  scoreChange > 0 ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {scoreChange > 0 ? `+${scoreChange}` : `${scoreChange}`}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <ConfettiComponent
+            trigger={showConfetti}
+            config={{
+              particleCount: 200,
+              spread: 100,
+              colors: ["#ff0000", "#00ff00", "#0000ff"],
+              shapes: ["circle", "square"],
+              origin: { x: 0.5, y: 0.5 },
+            }}
           />
-        ))}
-      </div>
 
-      {gameOver && <GameOver score={score} />}
+          <div className="grid grid-cols-1 gap-4">
+            {tickets.map((ticket) => (
+              <Ticket
+                key={ticket.id}
+                ticket={ticket}
+                handleClick={handleTicketClassification}
+              />
+            ))}
+          </div>
+
+          {gameOver && <GameOver score={score} />}
+        </>
+      )}
     </div>
   );
 };
