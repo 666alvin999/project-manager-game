@@ -1,21 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {generateTicket} from "./data.js";
+import React, { useEffect, useState } from "react";
+import { generateTicket } from "./data.js";
 import Header from "./components/Header/Header.jsx";
 import GameOver from "./components/GameOver/GameOver.jsx";
 import Ticket from "./components/Ticket/Ticket.jsx";
+import ConfettiComponent from './components/ConfettiComponent/ConfettiComponent.jsx';
 
 const App = () => {
     const [score, setScore] = useState(100);
     const [time, setTime] = useState(300);
     const [tickets, setTickets] = useState([]);
     const [gameOver, setGameOver] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false); // New state for confetti
 
     useEffect(() => {
         const timer = setInterval(() => {
             if (time > 0 && !gameOver) {
                 setTime(prev => prev - 1);
 
-                if (Math.random() < 0.2) {
+                if (Math.random()) {
                     addNewTicket();
                 }
             } else {
@@ -31,6 +33,12 @@ const App = () => {
 
         if (ticket) {
             const correct = ticket.type === classifiedType;
+
+            if (correct) {
+                // Show confetti on correct answer
+                setShowConfetti(true);
+                setTimeout(() => setShowConfetti(false), 3000); // Hide confetti after 3 seconds
+            }
 
             setScore(prev => {
                 const change = correct ? 10 : -15;
@@ -56,23 +64,31 @@ const App = () => {
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto p-4">
-            <Header score={score} time={time}/>
+        <>
+            <ConfettiComponent
+                trigger={showConfetti} // Trigger confetti when the state changes
+                config={{
+                    particleCount: 200,
+                    spread: 100,
+                    colors: ["#ff0000", "#00ff00", "#0000ff"],
+                    shapes: ["circle", "square"],
+                    origin: { x: 0.5, y: 0.5 },
+                }}
+            />
+            <div className="w-full max-w-4xl mx-auto p-4">
+                <Header score={score} time={time} />
 
-
-            <div className="grid grid-cols-1 gap-4">
-                {/*<Ticket ticket={{id: 2, text: "text", urgent: false}} />*/}
-                {
-                    tickets.map(ticket =>
+                <div className="grid grid-cols-1 gap-4">
+                    {tickets.map(ticket =>
                         <Ticket ticket={ticket} handleClick={handleTicketClassification} />
-                    )
-                }
-            </div>
+                    )}
+                </div>
 
-            {gameOver && (
-                <GameOver score={score}/>
-            )}
-        </div>
+                {gameOver && (
+                    <GameOver score={score} />
+                )}
+            </div>
+        </>
     );
 };
 
