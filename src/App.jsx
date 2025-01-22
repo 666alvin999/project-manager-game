@@ -70,9 +70,9 @@ const App = () => {
         {scoreChange !== null && (
           <motion.div
             key="scoreChange"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 25 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.5 }}
             className={`absolute top-10 left-1/2 transform -translate-x-1/2 text-xl font-bold ${
               scoreChange > 0 ? "text-green-500" : "text-red-500"
