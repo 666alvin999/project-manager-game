@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { generateTicket } from "./data.js";
-import React, { useEffect, useState } from "react";
-import { generateTicket } from "./data.js";
 import Header from "./components/Header/Header.jsx";
 import GameOver from "./components/GameOver/GameOver.jsx";
 import Ticket from "./components/Ticket/Ticket.jsx";
