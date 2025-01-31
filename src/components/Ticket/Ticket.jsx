@@ -12,7 +12,7 @@ const Ticket = ({ ticket, handleClick }) => {
 
     const randomImage = useMemo(() => {
         const randomIndex = Math.floor(Math.random() * imageList.length);
-        return `src/pictures/${imageList[randomIndex]}`;
+        return `/pictures/${imageList[randomIndex]}`;
     }, []);
 
     const backgroundColor = useMemo(generateTransparentWhite, []);
