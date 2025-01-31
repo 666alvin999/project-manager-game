@@ -1,38 +1,50 @@
 .button {
-    @apply text-white px-4 py-2 rounded-md;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-    transition-property: background-color;
-    transition-duration: 200ms;
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .bug {
-    @apply bg-bug;
+    background-color: #ff6b6b;
+    color: white;
+}
 
-    &:active {
-        @apply bg-darkBug;
-    }
+.bug:hover {
+    background-color: #ff4b4b;
 }
 
 .feature {
-    @apply bg-feature;
+    background-color: #4caf50;
+    color: white;
+}
 
-    &:active {
-        @apply bg-darkFeature;
-    }
+.feature:hover {
+    background-color: #43a047;
 }
 
 .support {
-    @apply bg-support;
+    background-color: #2196f3;
+    color: white;
+}
 
-    &:active {
-        @apply bg-darkSupport;
-    }
+.support:hover {
+    background-color: #1e88e5;
 }
 
 .technical {
-    @apply bg-technical;
+    background-color: #ff9800;
+    color: white;
+}
 
-    &:active {
-        @apply bg-darkTechnical;
-    }
+.technical:hover {
+    background-color: #fb8c00;
 }

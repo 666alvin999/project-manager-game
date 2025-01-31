@@ -107,79 +107,93 @@ const App = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 relative">
-      {/* Modal de transition avec animation */}
-      <AnimatePresence>
-        {isStartScreenVisible && (
-          <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-gray-700 text-white"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-          >
-            <div className="text-center">
-              <h1 className="text-5xl font-bold mb-8">Tu veux devenir chef de projet ?</h1>
-              <motion.button
-                onClick={startGame}
-                className="px-8 py-4 bg-white text-gray-600 font-bold rounded-lg shadow-md hover:bg-gray-200"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                Commencer
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Contenu principal */}
-      {!isStartScreenVisible && (
-        <>
-          <Header score={score} time={time} />
-
-          <AnimatePresence>
-            {scoreChange !== null && (
+      <div className="w-full max-w-4xl mx-auto p-4 relative h-auto">
+        {/* Ecran de départ */}
+        <AnimatePresence>
+          {isStartScreenVisible && (
               <motion.div
-                key="scoreChange"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 25 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5 }}
-                className={`absolute top-10 left-1/2 transform -translate-x-1/2 text-xl font-bold ${
-                  scoreChange > 0 ? "text-green-500" : "text-red-500"
-                }`}
+                  className="fixed inset-0 flex items-center justify-center bg-gray-700 text-white"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.1 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                {scoreChange > 0 ? `+${scoreChange}` : `${scoreChange}`}
+                <div className="text-center">
+                  <h1 className="text-5xl font-bold mb-8">Tu veux devenir chef de projet ?</h1>
+                  <motion.button
+                      onClick={startGame}
+                      className="px-8 py-4 bg-white text-gray-600 font-bold rounded-lg shadow-md hover:bg-gray-200"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                  >
+                    Commencer
+                  </motion.button>
+                </div>
               </motion.div>
-            )}
-          </AnimatePresence>
+          )}
+        </AnimatePresence>
 
-          <ConfettiComponent
-            trigger={showConfetti}
-            config={{
-              particleCount: 200,
-              spread: 100,
-              colors: ["#ff0000", "#00ff00", "#0000ff"],
-              shapes: ["circle", "square"],
-              origin: { x: 0.5, y: 0.5 },
-            }}
-          />
+        {/* Contenu principal */}
+        {!isStartScreenVisible && (
+            <>
+              <Header score={score} time={time} />
 
-          <div className="grid grid-cols-1 gap-4">
-            {tickets.map((ticket) => (
-              <Ticket
-                key={ticket.id}
-                ticket={ticket}
-                handleClick={handleTicketClassification}
+              {/* Animation du changement de score */}
+              <AnimatePresence>
+                {scoreChange !== null && (
+                    <motion.div
+                        key="scoreChange"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 25 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.5 }}
+                        className={`absolute top-10 left-1/2 transform -translate-x-1/2 text-xl font-bold ${
+                            scoreChange > 0 ? "text-green-500" : "text-red-500"
+                        }`}
+                    >
+                      {scoreChange > 0 ? `+${scoreChange}` : `${scoreChange}`}
+                    </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Confetti */}
+              <ConfettiComponent
+                  trigger={showConfetti}
+                  config={{
+                    particleCount: 200,
+                    spread: 100,
+                    colors: ["#ff0000", "#00ff00", "#0000ff"],
+                    shapes: ["circle", "square"],
+                    origin: { x: 0.5, y: 0.5 },
+                  }}
               />
-            ))}
-          </div>
 
-          {gameOver && <GameOver score={score} />}
-        </>
-      )}
-    </div>
+              {/* Liste des tickets */}
+              <div className="grid grid-cols-12 gap-4">
+                <AnimatePresence>
+                  {tickets.map((ticket) => (
+                      <motion.div
+                          key={ticket.id}
+                          layout
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.8 }}
+                          transition={{ duration: 0.5 }}
+                          className="col-span-4"
+                      >
+                        <Ticket
+                            ticket={ticket}
+                            handleClick={handleTicketClassification}
+                        />
+                      </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+
+              {gameOver && <GameOver score={score} />}
+            </>
+        )}
+      </div>
   );
 };
 

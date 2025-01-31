@@ -10,7 +10,7 @@ const Header = ({ time, score }) => {
   return (
     <div className="flex flex-col items-center justify-center mb-8 text-center">
       {/* Score */}
-      <div className="text-4xl bg-white p-8 font-extrabold text-gray-800 tracking-wide mb-6">
+      <div className="text-4xl bg-white p-8 rounded font-extrabold text-gray-800 tracking-wide mb-6">
         <span className="block text-gray-500 text-lg">Ton score</span>
         <motion.span
           key={score}

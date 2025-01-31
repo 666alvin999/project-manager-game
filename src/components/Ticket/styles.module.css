@@ -1,5 +1,5 @@
 .ticket {
-    @apply p-4 flex justify-between items-stretch gap-4 border-2 border-gray-200 rounded-md;
+    @apply min-h-60 col-span-4 p-4 flex flex-col justify-between items-stretch gap-4 border-2 border-gray-200 rounded-md bg-white col-span-4;
 
     .content {
         @apply w-full h-full flex flex-col justify-between items-center;
@@ -10,7 +10,7 @@
     }
 
     .buttonContainer {
-        @apply w-fit flex justify-center items-center gap-2;
+        @apply w-fit flex flex-wrap justify-center items-center gap-2;
     }
 
 }

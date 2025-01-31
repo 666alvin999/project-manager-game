@@ -1,22 +1,27 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-const GameOver = ({score}) => {
-
+const GameOver = ({ score }) => {
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <Card className="p-6 text-center">
-                <h2 className="text-2xl font-bold mb-4">Game Over!</h2>
-                <p className="text-xl mb-4">Score final : {score}</p>
-                <Button
-                    onClick={() => window.location.reload()}
-                    className="bg-blue-500 hover:bg-blue-600"
+        <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
+        >
+            <div className="text-center bg-white p-8 rounded shadow-lg">
+                <h1 className="text-3xl font-bold text-red-600 mb-4">Game Over!</h1>
+                <p className="text-xl mb-4">Votre score final : <span className="font-bold">{score}</span></p>
+                <button
+                    onClick={() => window.location.reload()} // Recharger la page pour redémarrer
+                    className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
                     Rejouer
-                </Button>
-            </Card>
-        </div>
+                </button>
+            </div>
+        </motion.div>
     );
-
 };
 
 export default GameOver;
