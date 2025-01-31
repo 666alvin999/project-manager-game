@@ -194,7 +194,7 @@ const App = () => {
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.8 }}
                           transition={{ duration: 0.5 }}
-                          className="col-span-6"
+                          className="col-span-12 md:col-span-6"
                       >
                         <Ticket
                             ticket={ticket}
