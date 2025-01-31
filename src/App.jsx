@@ -74,12 +74,15 @@ const App = () => {
 
   const sortedTickets = useMemo(() => {
     return [...tickets].sort((a, b) => {
-      if (a.urgent !== b.urgent) {
+
+      if (b.urgent !== a.urgent) {
         return b.urgent - a.urgent;
       }
-      return b.priority - a.priority;
+
+      return a.priority - b.priority;
     });
   }, [tickets]);
+
 
 
   const triggerBadAnswerAnimation = () => {

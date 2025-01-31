@@ -4,7 +4,6 @@ import styles from "./styles.module.css";
 import { ticketTypes as TicketTypes } from "/src/data.js";
 
 const Ticket = ({ ticket, handleClick }) => {
-
     const generateTransparentWhite = () => {
         return `rgba(255, 255, 255, 0.8)`; // Blanc avec 80% d'opacité
     };
@@ -13,6 +12,11 @@ const Ticket = ({ ticket, handleClick }) => {
 
     return (
         <div className={styles.ticket} style={{ backgroundColor }}>
+            <div className={styles.indicators}>
+                {ticket.urgent && <span className={styles.urgentBadge}>Urgent</span>}
+                <span className={styles.priorityBadge}>Priorité: {ticket.priority}</span>
+            </div>
+
             <div className={styles.content}>
                 <p>{ticket.text}</p>
             </div>
