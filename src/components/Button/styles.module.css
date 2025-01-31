@@ -1,8 +1,8 @@
 .button {
     font-size: 14px;
     font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 8px 14px;
+    border-radius: 16px;
     border: none;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -14,17 +14,17 @@
 }
 
 .bug {
-    background-color: #ff6b6b;
-    color: white;
+    background-color: #ffb7b7;
+    color: #d65165;
 }
 
 .bug:hover {
-    background-color: #ff4b4b;
+    background-color: #f4a2ae;
 }
 
 .feature {
-    background-color: #4caf50;
-    color: white;
+    background-color: #9bd19c;
+    color: #1c5527;
 }
 
 .feature:hover {
@@ -32,8 +32,8 @@
 }
 
 .support {
-    background-color: #2196f3;
-    color: white;
+    background-color: #90bce3;
+    color: #0d426e;
 }
 
 .support:hover {
@@ -41,8 +41,8 @@
 }
 
 .technical {
-    background-color: #ff9800;
-    color: white;
+    background-color: #e1bc84;
+    color: #633f07;
 }
 
 .technical:hover {
