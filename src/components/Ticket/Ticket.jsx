@@ -9,8 +9,6 @@ const Ticket = ({ ticket, handleClick }) => {
         return `rgba(255, 255, 255, 0.8)`; // Blanc avec 80% d'opacité
     };
 
-
-
     const backgroundColor = useMemo(generateTransparentWhite, []);
 
     return (

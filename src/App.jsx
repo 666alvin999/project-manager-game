@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { generateTicket } from "./data.js";
 import Header from "./components/Header/Header.jsx";
 import GameOver from "./components/GameOver/GameOver.jsx";
@@ -67,8 +67,20 @@ const App = () => {
       priority: Math.floor(Math.random() * 3) + 1,
     };
 
+    console.log(newTicket);
     setTickets((prev) => [...prev, newTicket]);
   };
+
+
+  const sortedTickets = useMemo(() => {
+    return [...tickets].sort((a, b) => {
+      if (a.urgent !== b.urgent) {
+        return b.urgent - a.urgent;
+      }
+      return b.priority - a.priority;
+    });
+  }, [tickets]);
+
 
   const triggerBadAnswerAnimation = () => {
     const scalar = 2;
@@ -171,7 +183,7 @@ const App = () => {
               {/* Liste des tickets */}
               <div className="grid grid-cols-12 gap-4">
                 <AnimatePresence>
-                  {tickets.map((ticket) => (
+                  {sortedTickets.map((ticket) => (
                       <motion.div
                           key={ticket.id}
                           layout
@@ -179,7 +191,7 @@ const App = () => {
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.8 }}
                           transition={{ duration: 0.5 }}
-                          className="col-span-4"
+                          className="col-span-6"
                       >
                         <Ticket
                             ticket={ticket}
