@@ -5,13 +5,11 @@ import { ticketTypes as TicketTypes } from "/src/data.js";
 
 const Ticket = ({ ticket, handleClick }) => {
     const generateTransparentWhite = () => {
-        return `rgba(255, 255, 255, 0.8)`; // Blanc avec 80% d'opacité
+        return `rgba(255, 255, 255, 0.8)`;
     };
 
-      // Générer une liste d'images de "1.jpg" à "16.jpg"
     const imageList = Array.from({ length: 16 }, (_, i) => `${i + 1}.jpg`);
 
-    // Sélection aléatoire d'une image au montage du composant
     const randomImage = useMemo(() => {
         const randomIndex = Math.floor(Math.random() * imageList.length);
         return `src/pictures/${imageList[randomIndex]}`;
