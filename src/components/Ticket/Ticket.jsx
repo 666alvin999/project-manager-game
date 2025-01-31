@@ -8,6 +8,15 @@ const Ticket = ({ ticket, handleClick }) => {
         return `rgba(255, 255, 255, 0.8)`; // Blanc avec 80% d'opacité
     };
 
+      // Générer une liste d'images de "1.jpg" à "16.jpg"
+    const imageList = Array.from({ length: 16 }, (_, i) => `${i + 1}.jpg`);
+
+    // Sélection aléatoire d'une image au montage du composant
+    const randomImage = useMemo(() => {
+        const randomIndex = Math.floor(Math.random() * imageList.length);
+        return `src/pictures/${imageList[randomIndex]}`;
+    }, []);
+
     const backgroundColor = useMemo(generateTransparentWhite, []);
 
     return (
@@ -17,6 +26,12 @@ const Ticket = ({ ticket, handleClick }) => {
                 <span className={styles.priorityBadge}>Priorité: {ticket.priority}</span>
             </div>
 
+            <div className={styles.profilepic}>
+                <img src={randomImage} alt="Profil" />
+            </div>
+            <div>
+
+            </div>
             <div className={styles.content}>
                 <p>{ticket.text}</p>
             </div>
